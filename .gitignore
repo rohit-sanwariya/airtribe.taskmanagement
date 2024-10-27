@@ -1,0 +1,64 @@
+# Ignore IDE files
+.idea/
+.eclipse/
+.vscode/
+
+# Ignore build and target folders
+/target/
+/build/
+
+# Ignore Spring Boot-specific files
+/.springBeans/
+/.springTooling
+
+
+# Ignore system files
+/.DS_Store
+/Thumbs.db
+
+
+# Ignore logs
+/logs
+
+
+# Ignore Maven and Gradle files
+/.mvn/
+/.gradle/
+
+
+# Ignore Java UserPrefs
+/javadeps/
+
+
+# Ignore settings.xml
+/settings.xml
+
+
+
+# Ignore IDE files
+.vscode/
+.idea/
+.eclipse/
+
+# Ignore build and node_modules folders
+/node_modules/
+/build/
+
+# Ignore React-specific files
+/.next/
+/.cache/
+
+# Ignore system files
+/.DS_Store
+/Thumbs.db
+
+# Ignore logs
+/logs
+
+# Ignore yarn and npm files
+/yarn-error.log
+/yarn-debug.log
+/npm-debug.log*
+
+# Ignore macOS .tmp files
+/.tmp
