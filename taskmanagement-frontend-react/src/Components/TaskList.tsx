@@ -15,13 +15,16 @@ import { LoginResponse } from '@/Layouts/Login';
 import { Task } from '@/types/User';
 import { usetasksStore } from '@/Store/Store';
 
-
+interface Comment {
+   commentId:number,
+   content:string,
+}
 
 const TaskList = () => {
   const tasks = usetasksStore(s=>s.tasks);
   const fetchTasks = usetasksStore(s=>s.fetchtasksAsync);
   const loading  = usetasksStore(s=>s.loading);
-  const [error, setError] = useState<string | null>(null);
+  const [error, ] = useState<string | null>(null);
   const [open, setopen] = useState<boolean>(false);
   const [currentTask, setTurrentTask] = useState<Task | null>(null);
   const [commentOpenId, setCommentOpenId] = useState<number|null>(null);

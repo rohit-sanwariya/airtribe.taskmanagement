@@ -34,7 +34,7 @@ const ComboBox:React.FC<Iprops> = ({options,placeholder,handleComboInputChange,o
     const [value, setValue] = React.useState<null|string>(null)
     React.useEffect(() => {
       if(owner?.id){
-        setValue(owner?.id);
+        setValue(owner?.id.toString());
       }
       return () => {
         

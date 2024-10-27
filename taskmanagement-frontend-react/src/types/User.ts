@@ -29,7 +29,7 @@ export interface IUserProfile {
  export const taskDataInitial: Partial<Task> = {
     title: '',
     description: '',
-    dueDate: '',
+    dueDate: new Date(),
     status: 'PENDING',
     userId: null,
     priority:TaskPriority.LOW
@@ -46,7 +46,7 @@ export interface IUserProfile {
     taskId: number;
     title: string;
     description: string;
-    dueDate: Date | string;
+    dueDate: Date;
     status: string;
     userId: number | null;
     userEmail: string;

@@ -20,7 +20,7 @@ import { usetasksStore } from "@/Store/Store";
 
 
 export function CreateTask({ open, onSubmit, setopen, task }: {
-  setopen: Dispatch<SetStateAction<boolean>>, open: boolean, onSubmit: any, task: Task | null
+  setopen: Dispatch<SetStateAction<boolean>>, open: boolean, onSubmit:  (open: boolean) => void, task: Task | null
 }) {
 
   const [taskData, setTaskData] = useState({ ...taskDataInitial });
@@ -32,7 +32,7 @@ export function CreateTask({ open, onSubmit, setopen, task }: {
       setTaskData({
         title: task.title,
         description: task.description,
-        dueDate: task.dueDate.toString(),
+        dueDate: task.dueDate,
         status: task.status,
         userId: task.userId,
         priority: task.priority
@@ -53,7 +53,7 @@ export function CreateTask({ open, onSubmit, setopen, task }: {
   const handleSelectInputChange = (id:'status'|'priority',value: string) => {
     setTaskData(prevData => ({ ...prevData, [id]: Number(value) }));
   };
-  const handleDateInputChange = (value: string) => {
+  const handleDateInputChange = (value: Date) => {
     setTaskData(prevData => ({ ...prevData, 'dueDate': value }));
   };
 
