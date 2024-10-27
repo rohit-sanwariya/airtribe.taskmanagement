@@ -1,0 +1,51 @@
+services:
+  taskmanagement-app:
+    container_name: taskmanagement-api
+    build: 
+      context: ./taks.management.ai
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://taskmanagement-db:3306/taskmanagement?autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: verysecret
+    depends_on:
+      - taskmanagement-db
+    restart: always
+
+  taskmanagement-db:
+    image: 'mysql:latest'
+    container_name: taskmanagement-db
+    environment:
+      - MYSQL_DATABASE=taskmanagement
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=verysecret
+      - MYSQL_USER=myuser
+    ports:
+      - '3307:3306'
+    volumes:
+      - taskmanagement-volume:/var/lib/mysql
+    restart: always
+
+  taskmanagement-frontend:
+    build:
+      context: ./taskmanagement-frontend-react/
+    container_name: taskmanagement-frontend
+    develop:
+      watch:
+        - action: rebuild
+          path: ./taskmanagement-frontend-react/
+          target: /app 
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '5174:80'
+    depends_on:
+      - taskmanagement-app
+
+volumes:
+  taskmanagement-volume: {}
