@@ -33,7 +33,7 @@ public class TaskDTO {
     private Long userId;
     private String userEmail;
 
-    public TaskDTO(Long taskId, String title, String description, LocalDateTime dueDate, Status status, Long userId, String userEmail) {
+    public TaskDTO(Long taskId, String title, String description, LocalDateTime dueDate,TaskPriority priority, Status status, Long userId, String userEmail) {
         this.taskId = taskId;
         this.title = title;
         this.description = description;
@@ -41,5 +41,6 @@ public class TaskDTO {
         this.status = status;
         this.userId = userId;
         this.userEmail = userEmail;
+        this.priority = priority;
     }
 }

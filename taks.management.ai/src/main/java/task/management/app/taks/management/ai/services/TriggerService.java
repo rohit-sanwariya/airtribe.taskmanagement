@@ -18,16 +18,15 @@ public class TriggerService {
     @PostConstruct
     public void createTriggerIfNotExists() {
         String dropTriggerSql = "DROP TRIGGER IF EXISTS after_task_update";
+        String dropTriggerInsertSql = "DROP TRIGGER IF EXISTS after_task_insert";
         String createTriggerSql = """
                 CREATE TRIGGER after_task_update
-               AFTER INSERT OR UPDATE ON tasks
+                AFTER UPDATE ON tasks
                 FOR EACH ROW
                 BEGIN
                     -- Initialize an empty message variable
                     DECLARE message TEXT;
-                IF OLD IS NULL THEN
-                            SET message = CONCAT('New task created with title "', NEW.title, '", description "', NEW.description, '", due date "', NEW.dueDate, '", status "', NEW.status, '", and assigned to user ID ', NEW.assigned_userid, '.');
-                ELSE
+                
                     -- Check for updates in individual columns
                     IF (OLD.title <> NEW.title) THEN
                         SET message = CONCAT('Task title changed from "', OLD.title, '" to "', NEW.title, '".');
@@ -75,11 +74,22 @@ public class TriggerService {
                             NOW()
                         );
                     END IF;
-               END IF;
                 END;""";
-
+        String insertTriggerSql = """
+                CREATE TRIGGER after_task_insert
+                AFTER INSERT ON tasks
+                FOR EACH ROW
+                BEGIN
+                    DECLARE message TEXT;
+                    SET message = CONCAT('New task created with title "', NEW.title, '", description "', NEW.description, '", due date "', NEW.dueDate, '", status "', NEW.status, '", and assigned to user ID ', NEW.assigned_userid, '.');
+                    INSERT INTO notification (userid, content, read_status, created_at)
+                    VALUES (NEW.assigned_userid, message, FALSE, NOW());
+                END;
+                """;
         // Execute the SQL commands using JdbcTemplate
         jdbcTemplate.execute(dropTriggerSql);
+        jdbcTemplate.execute(dropTriggerInsertSql);
         jdbcTemplate.execute(createTriggerSql);
+        jdbcTemplate.execute(insertTriggerSql);
     }
 }
